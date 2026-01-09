@@ -12,7 +12,7 @@ const verifyToken = async (req, res, next) => {
         return res
           .status(401)
           .json({ success: false, message: "Invalid token" });
-      req.userId = payload.userId;
+      req.userId = payload.id;
       next();
     });
   } catch (error) {
