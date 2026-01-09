@@ -19,6 +19,8 @@ authRouter.post("/isAdmin", verifyToken, CheckIsAdmin);
 
 // authRouter.get("/test-token", verifyToken, (req, res) => {
 //   try {
+//     console.log(req.userId);
+
 //     res.status(200).json({ success: true, message: "Auth Middleware Working" });
 //   } catch (error) {
 //     res.status(500).json({ success: true, message: error.message });
