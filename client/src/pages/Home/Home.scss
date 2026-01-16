@@ -7,16 +7,28 @@
 }
 
 .text-container {
-    flex: 3
+    flex: 3;
+
+    @include md {
+        display: 1;
+    }
 }
 
 .wrapper {
-    padding-right: 100px;
+    padding-right: 90px;
     display: flex;
     flex-direction: column;
     gap: 50px;
     justify-content: center;
     height: 100%;
+
+    @include md {
+        padding: 0;
+    }
+
+    @include sm {
+        justify-content: flex-start;
+    }
 
     .title {
         font-size: 60px;
@@ -26,8 +38,20 @@
         display: flex;
         justify-content: space-between;
 
+        @include sm {
+            display: none;
+        }
+
         h1 {
             font-size: 36px;
+
+            @include sm {
+                font-size: 20px;
+            }
+
+            @include lg {
+                font-size: 32px;
+            }
         }
 
         h2 {
@@ -35,7 +59,15 @@
             font-weight: 300;
         }
     }
+
 }
+
+.description {
+    @include sm {
+        font-size: 10px;
+    }
+}
+
 
 .img-container {
     flex: 2;
@@ -48,5 +80,17 @@
         width: 115%;
         position: absolute;
         right: 0;
+    }
+
+    @include md {
+        display: none;
+    }
+
+    @include sm {
+        display: none;
+    }
+
+    @include lg {
+        width: 105%;
     }
 }
