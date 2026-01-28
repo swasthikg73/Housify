@@ -96,6 +96,8 @@ nav {
 
             &.active {
                 right: 0;
+                height: 100%;
+                z-index: 998;
             }
 
             @include sm {
