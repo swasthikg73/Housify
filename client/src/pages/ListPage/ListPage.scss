@@ -25,4 +25,7 @@
 .mapContainer {
     flex: 2;
     background-color: #fcf5f3;
+    max-height: 95%;
+    overflow-y: hidden;
+    border-radius: 5px;
 }
