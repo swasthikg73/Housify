@@ -1,9 +1,12 @@
 import "./Navbar.scss";
-import { assets } from "../../assets/assets";
+import { assets, userData } from "../../assets/assets";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+
+  const user = false;
   return (
     <nav>
       <div className="left">
@@ -11,17 +14,32 @@ const Navbar = () => {
           <img src={assets.logo} alt="" />
           <span>Housify</span>
         </a>
-
         <a href="/">Home</a>
         <a href="/">About</a>
         <a href="/">Contact</a>
         <a href="/">Agents</a>
       </div>
+
       <div className="right">
-        <a href="/">Sign In</a>
-        <a className="register" href="">
-          Sign Up
-        </a>
+        {!user ? (
+          <div className="user">
+            <img src={userData.img} alt="" />
+            <span>John Max</span>
+            <Link className="profile" to="/profile">
+              <div className="notification">3</div>
+
+              <span>Profile</span>
+            </Link>
+          </div>
+        ) : (
+          <>
+            <a href="/">Sign In</a>
+            <a className="register" href="">
+              Sign Up
+            </a>
+          </>
+        )}
+
         <div className="menuIcon">
           <img src={assets.menu} alt="" onClick={() => setOpen(!open)} />
         </div>
