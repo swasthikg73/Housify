@@ -6,6 +6,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./pages/login/Login.jsx";
 import Details from "./pages/DetailsPage/Details.jsx";
 import Profile from "./pages/Profile/Profile.jsx";
+import AboutPage from "./pages/about/AboutPage.jsx";
 
 function App() {
   const router = createBrowserRouter([
@@ -32,6 +33,10 @@ function App() {
         {
           path: "profile/:id",
           element: <Profile />,
+        },
+        {
+          path: "about",
+          element: <AboutPage />,
         },
       ],
     },

@@ -4,7 +4,7 @@ import "leaflet/dist/leaflet.css";
 import Pin from "../Pin/Pin";
 import { ListData } from "../../assets/assets.js";
 
-const Map = () => {
+const Map = ({ items }) => {
   return (
     <div className="map">
       <MapContainer center={[51.505, -0.09]} zoom={7} scrollWheelZoom={true}>
@@ -13,9 +13,9 @@ const Map = () => {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
 
-        {ListData.map((item) => (
-          <Pin key={item.id} item={item} />
-        ))}
+        {items && <Pin item={items} />}
+
+        {!items && ListData.map((item) => <Pin key={item.id} item={item} />)}
       </MapContainer>
     </div>
   );

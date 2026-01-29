@@ -14,10 +14,10 @@ const Navbar = () => {
           <img src={assets.logo} alt="" />
           <span>Housify</span>
         </a>
-        <a href="/">Home</a>
-        <a href="/">About</a>
-        <a href="/">Contact</a>
-        <a href="/">Agents</a>
+        <Link to="/">Home</Link>
+        <Link to="/">About</Link>
+        <Link to="/about">Contact</Link>
+        <Link to="/">Agents</Link>
       </div>
 
       <div className="right">
