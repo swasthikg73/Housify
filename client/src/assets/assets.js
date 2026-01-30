@@ -16,8 +16,14 @@ import save from "./save.png";
 import school from "./school.png";
 import size from "./size.png";
 import utility from "./utility.png";
+import linkedin from "./linkedin.png";
+import github from "./github.png";
+import gmail from "./gmail.png";
 
 export const assets = {
+  linkedin,
+  github,
+  gmail,
   arrow,
   bed,
   bg,
