@@ -2,6 +2,7 @@ import React from "react";
 import "./Profile.scss";
 import Card from "../../components/Card/Card.jsx";
 import { assets, ListData, userData } from "../../assets/assets.js";
+import Chat from "../../components/chat/Chat.jsx";
 
 const Profile = () => {
   return (
@@ -43,8 +44,10 @@ const Profile = () => {
           </div>
         </div>
       </div>
-      <div className="messageContainer">
-        <div className="wrappers"></div>
+      <div className="chatContainer">
+        <div className="wrappers">
+          <Chat />
+        </div>
       </div>
     </div>
   );

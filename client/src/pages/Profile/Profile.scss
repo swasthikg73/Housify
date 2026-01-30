@@ -1,11 +1,35 @@
+@import '../../responsive.scss';
+
 .profilePage {
     display: flex;
     height: 100%;
+
+    @include md {
+        flex-direction: column;
+        overflow: scroll;
+    }
+
+    @include sm {
+        flex-direction: column;
+        overflow: scroll;
+    }
+
 
     .userdetails {
         flex: 3;
         height: 100%;
         overflow-y: scroll;
+
+        @include md {
+            flex: none;
+            height: max-content;
+        }
+
+
+        @include sm {
+            flex: none;
+            height: max-content;
+        }
 
         .wrappers {
             height: 100%;
@@ -65,13 +89,26 @@
     }
 
 
-    .messageContainer {
+    .chatContainer {
         flex: 2;
         height: 100%;
         background-color: #fcf5f3;
 
+
+        @include md {
+            flex: none;
+            height: max-content;
+        }
+
+
+        @include sm {
+            flex: none;
+            height: max-content;
+        }
+
         .wrappers {
             padding: 0px 20px;
+            height: 100%;
         }
     }
 }
