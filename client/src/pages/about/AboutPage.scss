@@ -1,0 +1,80 @@
+@import '../../responsive.scss';
+
+.about {
+    height: calc(100% - 100px);
+    display: grid;
+    align-self: center;
+
+    .about-wrapper {
+        display: flex;
+
+        @include sm {
+            flex-direction: column;
+        }
+
+
+        .profileImage {
+            flex: 2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            @include sm {
+                display: none;
+                flex: 0;
+            }
+
+            img {
+                width: 350px;
+                height: 350px;
+                object-fit: cover;
+                border-radius: 50%;
+            }
+        }
+
+
+        .personal-details {
+            flex: 3;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 20px;
+
+            @include sm {
+                justify-content: start;
+                flex: 1;
+            }
+
+            .title {
+                font-size: 25px;
+                font-weight: 500;
+            }
+
+            .name {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+
+                span {
+                    font-size: 28px;
+                    color: #555;
+                }
+            }
+
+            .technologies {
+                font-size: 26px;
+            }
+
+            .connection-links {
+                display: flex;
+                gap: 20px;
+                align-items: center;
+
+                img {
+                    height: 28px;
+                    width: 28px;
+                }
+            }
+        }
+    }
+}
