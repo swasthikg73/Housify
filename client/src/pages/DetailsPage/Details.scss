@@ -1,14 +1,48 @@
+@import "../../responsive.scss";
+
 .details-container {
     height: 100%;
     display: flex;
+    overflow-y: scroll;
+
+    @include md {
+        flex-direction: column;
+        overflow: scroll;
+    }
+
+    @include sm {
+        flex-direction: column;
+        overflow: scroll;
+    }
 
     .details {
         flex: 3;
 
+
+        @include md {
+            flex: none;
+            height: max-content;
+        }
+
+        @include sm {
+            flex: none;
+            height: max-content;
+        }
+
         .wrappers {
             padding-right: 50px;
 
+            @include md {
+                padding: 0px;
+            }
+
+            @include sm {
+                padding: 0px;
+
+            }
+
             .info {
+                margin-top: 50px;
 
                 .top {
                     display: flex;
@@ -82,9 +116,163 @@
     .features {
         flex: 2;
         background-color: #fcf5f3;
+        height: 100%;
+        overflow-y: scroll;
+
+        @include md {
+            margin-top: 10px;
+            flex: none;
+            height: max-content;
+            overflow-y: hidden;
+        }
+
+        @include sm {
+            margin-top: 10px;
+            flex: none;
+            height: max-content;
+            overflow-y: hidden;
+        }
+
 
         .wrappers {
             padding: 0px 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+
+            .title {
+                margin: 0;
+                padding: 0;
+                font-weight: 600;
+                font-size: 20px;
+            }
+        }
+
+        .listVertical {
+            background-color: white;
+            padding: 10px 5px;
+            border-radius: 5px;
+            margin: 15px 0px;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 10px;
+
+
+            img {
+                height: 25px;
+                width: 25px;
+            }
+
+            .featureText {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+
+                span {
+                    font-weight: 800;
+                    font-size: 17px;
+                }
+
+                p {
+                    font-weight: 500;
+                    font-size: 16px;
+                }
+            }
+        }
+
+        .room-sizes {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 20px 0px;
+
+            @include lg {
+                font-size: 12px;
+            }
+
+
+            .size {
+                background-color: white;
+                border-radius: 5px;
+                padding: 10px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+
+
+                img {
+                    height: 24px;
+                    width: 24px;
+                }
+            }
+        }
+
+        .listHorizontal {
+            margin: 15px 0px;
+            background-color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-radius: 5px;
+
+            @include md {
+                flex-wrap: wrap;
+            }
+
+            @include sm {
+                flex-wrap: wrap;
+
+            }
+        }
+
+        .mapContainer {
+            margin-top: 15px;
+            border-radius: 10px;
+            max-height: 250px;
+            width: 100%;
+            background-color: white;
+            overflow-y: hidden;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px 0px;
+
+
+            button {
+                padding: 15px;
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                background-color: white;
+                justify-content: space-between;
+                border: 1px solid #fece51;
+                cursor: pointer;
+
+                @include md {
+                    padding: 10px;
+                }
+
+                @include sm {
+                    padding: 10px;
+
+                }
+
+                img {
+                    height: 20px;
+                    height: 20px;
+                }
+            }
         }
     }
+}
+
+
+::-webkit-scrollbar {
+    display: none;
 }
