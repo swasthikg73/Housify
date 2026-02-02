@@ -33,7 +33,6 @@ export const login = async (req, res) => {
   const { email, password } = req.body;
   try {
     //Check User Exits
-
     const user = await prisma.user.findUnique({
       where: {
         email: email,
