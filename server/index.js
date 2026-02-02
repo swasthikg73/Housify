@@ -16,7 +16,7 @@ app.use(
 app.use(express.json());
 const PORT = process.env.PORT || 5000;
 
-app.use("/", indexRouter);
+app.use("/api/", indexRouter);
 
 app.get("/", (req, res) => {
   res.send("Server is running");

@@ -10,6 +10,20 @@ export const register = async (req, res) => {
   const salt = bcrypt.genSaltSync(10);
   const hashedPassowrd = bcrypt.hashSync(password, salt);
 
+  //Check User Exits
+  const existingEmail = await prisma.user.findUnique({
+    where: {
+      email: email,
+    },
+  });
+
+  //Check User Exits
+  const existingUsername = await prisma.user.findUnique({
+    where: {
+      username: username,
+    },
+  });
+
   const user = await prisma.user.create({
     data: {
       username,
@@ -18,14 +32,12 @@ export const register = async (req, res) => {
     },
   });
 
-  console.log(user);
-
   try {
     res
       .status(201)
       .json({ success: true, message: "User registered successfully", user });
   } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
+    return res.status(500).json({ success: false, message: error.message });
   }
 };
 
