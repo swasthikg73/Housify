@@ -7,6 +7,7 @@ import Login from "./pages/login/Login.jsx";
 import Details from "./pages/DetailsPage/Details.jsx";
 import Profile from "./pages/Profile/Profile.jsx";
 import AboutPage from "./pages/about/AboutPage.jsx";
+import Register from "./pages/register/Register.jsx";
 
 function App() {
   const router = createBrowserRouter([
@@ -25,6 +26,10 @@ function App() {
         {
           path: "login",
           element: <Login />,
+        },
+        {
+          path: "register",
+          element: <Register />,
         },
         {
           path: ":id",
