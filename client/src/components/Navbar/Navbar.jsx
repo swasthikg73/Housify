@@ -10,10 +10,10 @@ const Navbar = () => {
   return (
     <nav>
       <div className="left">
-        <a href="" className="logo">
+        <Link to="/" className="logo">
           <img src={assets.logo} alt="" />
           <span>Housify</span>
-        </a>
+        </Link>
         <Link to="/">Home</Link>
         <Link to="/">About</Link>
         <Link to="/about">Contact</Link>
@@ -21,7 +21,7 @@ const Navbar = () => {
       </div>
 
       <div className="right">
-        {!user ? (
+        {user ? (
           <div className="user">
             <img src={userData.img} alt="" />
             <span>John Max</span>
@@ -33,10 +33,10 @@ const Navbar = () => {
           </div>
         ) : (
           <>
-            <a href="/">Sign In</a>
-            <a className="register" href="">
+            <Link to="/login">Sign In</Link>
+            <Link className="register" to="/register">
               Sign Up
-            </a>
+            </Link>
           </>
         )}
 
