@@ -19,9 +19,12 @@ import utility from "./utility.png";
 import linkedin from "./linkedin.png";
 import github from "./github.png";
 import gmail from "./gmail.png";
+import user from "./user.png";
+import back from "./back.png";
 
 export const assets = {
   linkedin,
+  back,
   github,
   gmail,
   arrow,
@@ -33,6 +36,7 @@ export const assets = {
   chat,
   favicon,
   search,
+  user,
   fee,
   menu,
   pet,
