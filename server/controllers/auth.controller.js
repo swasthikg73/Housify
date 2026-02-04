@@ -17,13 +17,27 @@ export const register = async (req, res) => {
     },
   });
 
+  if (existingEmail) {
+    return res.status(500).json({
+      success: false,
+      message: "Email aleady exists",
+    });
+  }
+
   //Check User Exits
   const existingUsername = await prisma.user.findUnique({
     where: {
       username: username,
     },
   });
+  if (existingUsername) {
+    return res.status(500).json({
+      success: false,
+      message: "Username aleady exists",
+    });
+  }
 
+  //Create User
   const user = await prisma.user.create({
     data: {
       username,
@@ -57,8 +71,7 @@ export const login = async (req, res) => {
         .json({ success: false, message: "Invalid Credentials" });
 
     //Check the passowrd
-
-    const isPasswordCorrect = await bcrypt.compareSync(password, user.password);
+    const isPasswordCorrect = bcrypt.compareSync(password, user.password);
 
     if (!isPasswordCorrect)
       return res
@@ -82,9 +95,11 @@ export const login = async (req, res) => {
       maxAge: 1000 * 60 * 60 * 24 * 7, //7 day
     });
 
+    const { password: userPassword, ...User } = user;
+
     return res
       .status(200)
-      .json({ success: true, message: "User logged in successfully", user });
+      .json({ success: true, message: "User logged in successfully", User });
   } catch (error) {
     log(error);
     return res.status(500).json({ success: false, message: error.message });
@@ -97,31 +112,6 @@ export const logout = (req, res) => {
     return res
       .status(200)
       .json({ success: true, message: "User logged out successfully" });
-  } catch (error) {
-    return res.status(500).json({ success: false, message: error.message });
-  }
-};
-
-export const CheckIsAdmin = async (req, res) => {
-  try {
-    const token = req.cookies["access-token"];
-    if (!token) {
-      return res
-        .status(401)
-        .json({ success: false, message: "Not authenticated" });
-    }
-    jwt.verify(token, process.env.JWT_SECRET_KEY, async (error, payload) => {
-      if (error)
-        return res
-          .status(401)
-          .json({ success: false, message: "Not authenticated" });
-      if (!payload.isAdmin)
-        return res
-          .status(403)
-          .json({ success: false, message: "You are not authorized" });
-
-      return res.status(200).json({ success: true, message: "You are admin" });
-    });
   } catch (error) {
     return res.status(500).json({ success: false, message: error.message });
   }
