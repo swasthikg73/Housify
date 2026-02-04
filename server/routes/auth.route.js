@@ -1,12 +1,7 @@
 import express from "express";
-import {
-  login,
-  logout,
-  register,
-  CheckIsAdmin,
-} from "../controllers/auth.controller.js";
+import { login, logout, register } from "../controllers/auth.controller.js";
 
-import verifyToken from "../middleware/auth.middleware.js";
+import { verifyToken, CheckIsAdmin } from "../middleware/auth.middleware.js";
 const authRouter = express.Router();
 
 authRouter.post("/login", login);
@@ -14,8 +9,6 @@ authRouter.post("/login", login);
 authRouter.post("/register", register);
 
 authRouter.post("/logout", logout);
-
-authRouter.post("/isAdmin", verifyToken, CheckIsAdmin);
 
 // authRouter.get("/test-token", verifyToken, (req, res) => {
 //   try {
