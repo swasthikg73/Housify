@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import "./index.scss";
 import App from "./App.jsx";
 import { ToastContainer } from "react-toastify";
+import { AuthContextProvider } from "./context/AuthContext.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -18,6 +19,9 @@ createRoot(document.getElementById("root")).render(
       pauseOnHover
       theme="light"
     />
-    <App />
+
+    <AuthContextProvider>
+      <App />
+    </AuthContextProvider>
   </StrictMode>
 );
