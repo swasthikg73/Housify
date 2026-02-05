@@ -1,6 +1,14 @@
+@import '../../responsive.scss';
+
+
 .form-wrapper {
     height: 100vh;
     display: flex;
+
+    @include sm {
+        overflow-y: hidden;
+    }
+
 
     .form {
         flex: 3;
@@ -11,6 +19,8 @@
         flex-direction: column;
         gap: 40px;
 
+
+
         form {
             display: flex;
             flex-direction: column;
@@ -20,6 +30,9 @@
             input {
                 padding: 10px 20px;
 
+                font-size: 13px;
+                font-weight: 600;
+
             }
 
             button {
@@ -28,6 +41,10 @@
                 background-color: #20a790;
                 cursor: pointer;
                 color: black;
+
+                &:hover {
+                    background-color: #06c2a3;
+                }
             }
         }
 
@@ -54,6 +71,10 @@
             width: 115%;
             position: absolute;
             right: 0;
+        }
+
+        @include sm {
+            display: none;
         }
     }
 }

@@ -3,9 +3,13 @@ import { assets } from "../../assets/assets";
 import apiRequest from "../../lib/apiRequest.js";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext.jsx";
 
 const Login = () => {
   const navigate = useNavigate();
+
+  const { updateUser } = useContext(AuthContext);
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -18,9 +22,9 @@ const Login = () => {
         email,
         password,
       });
-      console.log(res.data);
 
       if (res.data.success) {
+        updateUser(res.data.User);
         toast.success(res.data.message);
         navigate("/");
       } else {
