@@ -53,7 +53,7 @@ export const updateUser = async (req, res) => {
   const tokenUserId = req.userId;
   const id = req.params.id;
   const { password, ...inputs } = req.body;
-
+  const Avatar = req.body.avatar;
   try {
     let hashedPassowrd = null;
 
@@ -69,13 +69,16 @@ export const updateUser = async (req, res) => {
       });
     }
 
-    const updatedUser = await prisma.user.update({
+    const updateduser = await prisma.user.update({
       where: { id },
       data: {
         ...inputs,
         ...(hashedPassowrd && { password: hashedPassowrd }),
+        ...(Avatar && { avatar: Avatar }),
       },
     });
+
+    const { password: userPassword, ...updatedUser } = updateduser;
 
     return res.status(200).json({
       success: true,
@@ -92,6 +95,14 @@ export const updateUser = async (req, res) => {
 };
 
 export const deleteUser = async (req, res) => {
+  const tokenId = req.userId;
+
+  if (tokenId != req.params.id) {
+    return res.status(500).json({
+      success: false,
+      message: "Unauthorized to perform this action",
+    });
+  }
   try {
     await prisma.user.delete({
       where: {
