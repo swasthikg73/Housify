@@ -1,0 +1,31 @@
+.update-wrapper {
+    height: 100vh;
+    display: flex;
+}
+
+
+.back-btn {
+    height: 30px;
+    width: 30px;
+    transition: 700ms all;
+
+    &:hover {
+        transform: scale(1.50);
+    }
+}
+
+.image-container {
+    flex: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 30px;
+
+    img {
+        height: 300px;
+        width: 300px;
+    }
+
+
+}
