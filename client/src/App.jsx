@@ -10,6 +10,7 @@ import AboutPage from "./pages/about/AboutPage.jsx";
 import Register from "./pages/register/Register.jsx";
 import ProfileUpdate from "./pages/ProfileUpdatePage/ProfileUpdate.jsx";
 import AddPost from "./pages/Add Post/AddPost.jsx";
+import { singlePageLoader, listPageLoader } from "./lib/Loader.js";
 
 function App() {
   const router = createBrowserRouter([
@@ -23,6 +24,7 @@ function App() {
         },
         {
           path: "list",
+          loader: listPageLoader,
           element: <ListPage />,
         },
         {
@@ -45,7 +47,8 @@ function App() {
       element: <RequireAuth />,
       children: [
         {
-          path: ":id",
+          path: "details/:id",
+          loader: singlePageLoader,
           element: <Details />,
         },
         {
