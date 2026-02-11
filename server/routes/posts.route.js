@@ -10,8 +10,8 @@ import {
 } from "../controllers/post.controller.js";
 const postsRouter = express.Router();
 
-postsRouter.get("/", verifyToken, getPosts);
-postsRouter.get("/:id", verifyToken, getPost);
+postsRouter.get("/", getPosts);
+postsRouter.get("/:id", getPost);
 postsRouter.post("/add", verifyToken, addPost);
 postsRouter.put("/update/:id", verifyToken, updatePost);
 postsRouter.delete("/delete/:id", verifyToken, deletePost);

@@ -23,6 +23,8 @@ model User {
   createdAt  DateTime    @default(now())
   posts      Post[]
   savedPosts savedPost[]
+  chats      Chat[]      @relation(fields: [chatIds], references: [id])
+  chatIds    String[]    @db.ObjectId
 }
 
 model Post {
@@ -80,4 +82,23 @@ model savedPost {
   createdAt DateTime @default(now())
 
   @@unique([userId, postId])
+}
+
+model Chat {
+  id          String     @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt   DateTime   @default(now())
+  usersIds    String[]   @db.ObjectId
+  users       User[]     @relation(fields: [usersIds], references: [id])
+  seenBy      String[]   @db.ObjectId
+  messages    Messages[]
+  lastMessage String?
+}
+
+model Messages {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  text      String
+  userIds   String
+  createdAt DateTime @default(now())
+  chat      Chat     @relation(fields: [chatId], references: [id])
+  chatId    String   @db.ObjectId
 }
