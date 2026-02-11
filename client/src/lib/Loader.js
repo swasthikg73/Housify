@@ -26,3 +26,16 @@ export const listPageLoader = async ({ request, params }) => {
     console.log(error);
   }
 };
+
+export const profilePageLoader = async () => {
+  try {
+    const res = await apiRequest.get("/user/profilePosts");
+
+    if (!res.data.success) {
+      return toast.error(res.data.message);
+    }
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
