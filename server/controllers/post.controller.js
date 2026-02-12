@@ -1,18 +1,35 @@
 import prisma from "../configs/prisma.config.js";
+import jwt from "jsonwebtoken";
 
 export const getPosts = async (req, res) => {
   try {
     const query = req.query;
+    // console.log(
+    //   "---------------------------------------------------------------------------------------"
+    // );
+
+    // console.log("Query :", query);
+
     const posts = await prisma.post.findMany({
       where: {
-        city: query?.city || undefined,
+        city: query?.city
+          ? {
+              contains: query?.city,
+              mode: "insensitive",
+            }
+          : undefined,
         type: query?.type || undefined,
-        location: query?.location || undefined,
+        address: query?.location
+          ? {
+              contains: query?.location,
+              mode: "insensitive",
+            }
+          : undefined,
         property: query?.property || undefined,
-        bedroom: query?.bedroom || undefined,
+        bedroom: query?.bedroom ? parseInt(query.bedroom) : undefined,
         price: {
-          gte: query.min ? parseInt(query.min) : 0,
-          lte: query.max ? parseInt(query.max) : 100000000000,
+          gte: query.minPrice ? parseInt(query.minPrice) : 0,
+          lte: query.maxPrice ? parseInt(query.maxPrice) : 100000000000,
         },
       },
     });
@@ -40,6 +57,7 @@ export const getPosts = async (req, res) => {
 export const getPost = async (req, res) => {
   try {
     const id = req.params.id;
+    console.log(id);
 
     const post = await prisma.post.findUnique({
       where: { id },
@@ -54,9 +72,35 @@ export const getPost = async (req, res) => {
       },
     });
 
+    let userId;
+    const token = req?.cookies["access-token"];
+    if (!token) {
+      userId = null;
+    }
+
+    jwt.verify(token, process.env.JWT_SECRET_KEY, async (error, payload) => {
+      if (error) {
+        return res.status(401).json({
+          success: false,
+          message: "Invalid Token",
+        });
+      }
+      userId = payload?.id;
+    });
+
+    const saved = await prisma.savedPost.findUnique({
+      where: {
+        userId_postId: {
+          userId,
+          postId: id,
+        },
+      },
+    });
+
     return res.status(200).json({
       success: true,
       post: post,
+      isSaved: saved ? true : false,
     });
   } catch (error) {
     console.log(error);
