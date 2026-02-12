@@ -18,7 +18,7 @@ const Map = ({ items }) => {
         center={
           items ? [items[0]?.latitude, items[0]?.longitude] : [12.9629, 77.5775]
         }
-        zoom={8}
+        zoom={7}
         scrollWheelZoom={true}>
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

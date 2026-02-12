@@ -29,12 +29,19 @@ export const listPageLoader = async ({ request, params }) => {
 
 export const profilePageLoader = async () => {
   try {
-    const res = await apiRequest.get("/user/profilePosts");
+    const [profilePosts, chats] = await Promise.all([
+      apiRequest.get("/user/profilePosts"),
+      apiRequest.get("/chat/"),
+    ]);
 
-    if (!res.data.success) {
-      return toast.error(res.data.message);
+    if (!profilePosts.data.success) {
+      return toast.error(profilePosts.data.message);
     }
-    return res.data;
+
+    if (!chats.data.success) {
+      return toast.error(chats.data.message);
+    }
+    return { profilePosts: profilePosts.data, chats: chats.data };
   } catch (error) {
     console.log(error);
   }
