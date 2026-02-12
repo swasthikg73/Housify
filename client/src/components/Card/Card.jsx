@@ -5,13 +5,13 @@ import { assets } from "../../assets/assets.js";
 const Card = ({ card }) => {
   return (
     <div className="card">
-      <Link to={`/${card.id}`} className="image-container">
+      <Link to={`/details/${card.id}`} className="image-container">
         <img src={card.images[0]} alt="" />
       </Link>
 
       <div className="text-container">
         <h2 className="title">
-          <Link to={`/${card.id}`}>{card.title}</Link>
+          <Link to={`/details/${card.id}`}>{card.title}</Link>
         </h2>
         <p className="address">
           <img src={assets.pin} alt="" />
@@ -30,14 +30,14 @@ const Card = ({ card }) => {
               <span>{card.bathroom} bathrooms</span>
             </div>
           </div>
-          <div className="icons">
+          {/* <div className="icons">
             <div className="icon">
               <img src={assets.save} alt="" />
             </div>
             <div className="icon">
               <img src={assets.chat} alt="" />
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
