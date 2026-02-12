@@ -87,6 +87,8 @@
         flex-direction: column;
         justify-content: space-between;
         align-items: center;
+        gap: 10px;
+        overflow-y: scroll;
 
         img {
             height: 100px;
