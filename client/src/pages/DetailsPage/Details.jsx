@@ -2,20 +2,33 @@ import Slider from "../../components/Slider/Slider.jsx";
 import "./Details.scss";
 import { assets } from "../../assets/assets.js";
 import Map from "../../components/Map/Map.jsx";
-import { useLoaderData } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 import DOMPurify from "dompurify";
 import { toast } from "react-toastify";
 import apiRequest from "../../lib/apiRequest.js";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext.jsx";
+import { format } from "timeago.js";
 
 const Details = () => {
   const details = useLoaderData();
-  let mapData = [details.post];
-  const [saved, setSaved] = useState(details.isSaved);
+  let mapData = [details?.post];
+  const [saved, setSaved] = useState(details?.isSaved);
+  const { CurrentUser } = useContext(AuthContext);
+
+  const [chat, setChat] = useState(null);
+  const [openchat, setOpenChat] = useState(false);
+
+  const bottomref = useRef(null);
+
+  useEffect(() => {
+    bottomref.current?.scrollIntoView({ behavior: "smooth" });
+  }, [chat?.messages]);
 
   const handleSave = async (e) => {
     e.preventDefault();
-    setSaved((prev) => !prev);
+    setSaved((prev) => true);
     try {
       const PostDetails = await apiRequest.post(
         `/user/save/` + details.post.id
@@ -36,10 +49,55 @@ const Details = () => {
     }
   };
 
+  async function getChatByPostId(postId) {
+    try {
+      const res = await apiRequest.get("/chat/getChatbyPost/" + postId);
+      return res.data.chat;
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
+  const openChat = async (e) => {
+    e.preventDefault();
+    let response;
+    setOpenChat(true);
+    response = await getChatByPostId(details?.post?.id);
+
+    if (!response) {
+      await apiRequest.post("/chat/create", {
+        receiverId: details?.post?.userId,
+        postId: details?.post?.id,
+      });
+      response = await getChatByPostId(details?.post?.id);
+    }
+    setChat(response);
+  };
+
+  const sendMessage = async (e) => {
+    e.preventDefault();
+    const formdata = new FormData(e.target);
+    const text = formdata.get("text");
+    const res = await apiRequest.post("/chat/addMessage/" + chat.id, {
+      text,
+    });
+    e.target.reset();
+
+    setChat((prev) => ({
+      ...prev,
+      messages: [...(prev.messages || []), res.data.message],
+    }));
+  };
+
+  console.log("chats: ", chat);
+
   return (
     <div className="details-container">
       <div className="details">
         <div className="wrappers">
+          <Link to={"/list"} className="back-button">
+            <img src={assets.back} alt="" />
+          </Link>
           <Slider images={details?.post?.images} />
           <div className="info">
             <div className="top">
@@ -49,7 +107,7 @@ const Details = () => {
                   <img src={assets.pin} alt="" />
                   <span>{details?.post?.address}</span>
                 </div>
-                <div className="price">$ {details?.post?.price}</div>
+                <div className="price">₹ {details?.post?.price}</div>
               </div>
               <div className="user">
                 <img src={details?.post?.user?.avatar} alt="" />
@@ -155,10 +213,12 @@ const Details = () => {
           </div>
 
           <div className="buttons">
-            <button>
-              <img src={assets.chat} alt="" />
-              Send a Message
-            </button>
+            {details?.post?.userId !== CurrentUser.id && (
+              <button onClick={openChat}>
+                <img src={assets.chat} alt="" />
+                Send a Message
+              </button>
+            )}
 
             <button
               onClick={handleSave}
@@ -169,6 +229,49 @@ const Details = () => {
               {saved ? "Saved" : "Save the Places"}
             </button>
           </div>
+
+          {/* Message Container */}
+          {openchat && (
+            <div className="chatBox">
+              <div className="top">
+                <div className="user">
+                  <img
+                    src={details?.post?.user?.avatar || assets.user}
+                    alt=""
+                  />
+                  <span>{details?.post?.user?.username}</span>
+                </div>
+                <span className="close" onClick={() => setOpenChat(false)}>
+                  X
+                </span>
+              </div>
+
+              <div className="center">
+                {chat?.messages?.map((message, index) => (
+                  <div
+                    key={index}
+                    className="chatMessage"
+                    style={{
+                      alignSelf:
+                        message?.userId === CurrentUser?.id
+                          ? "flex-end"
+                          : "flex-start",
+                      textAlign:
+                        message?.userId === CurrentUser?.id ? "right" : "left",
+                    }}>
+                    <p>{message?.text}</p>
+                    <span>{format(message?.createdAt)}</span>
+                  </div>
+                ))}
+
+                <div ref={bottomref}></div>
+              </div>
+              <form className="bottom" onSubmit={sendMessage}>
+                <textarea name="text" id="text"></textarea>
+                <button>Send</button>
+              </form>
+            </div>
+          )}
         </div>
       </div>
     </div>

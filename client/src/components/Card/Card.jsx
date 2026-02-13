@@ -17,7 +17,7 @@ const Card = ({ card }) => {
           <img src={assets.pin} alt="" />
           <span>{card.address}</span>
         </p>
-        <p className="price">$ {card.price}</p>
+        <p className="price">₹ {card.price}</p>
 
         <div className="bottom">
           <div className="features">

@@ -3,6 +3,7 @@ import "./index.scss";
 import App from "./App.jsx";
 import { ToastContainer } from "react-toastify";
 import { AuthContextProvider } from "./context/AuthContext.jsx";
+import { SocketcontextProvier } from "./context/SocketContext.jsx";
 
 createRoot(document.getElementById("root")).render(
   <>
@@ -20,7 +21,9 @@ createRoot(document.getElementById("root")).render(
     />
 
     <AuthContextProvider>
-      <App />
+      <SocketcontextProvier>
+        <App />
+      </SocketcontextProvier>
     </AuthContextProvider>
   </>
 );
