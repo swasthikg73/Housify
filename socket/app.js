@@ -1,74 +1,67 @@
+import express from "express";
+import http from "http";
 import { Server } from "socket.io";
 
-const io = new Server({
+const app = express();
+const server = http.createServer(app);
+
+const io = new Server(server, {
   cors: {
-    origin: "http://localhost:5173",
+    origin: [
+      "http://localhost:5173",
+      "https://your-frontend-domain.vercel.app", // replace later
+    ],
+    credentials: true,
   },
 });
 
 let onlineUsers = [];
 
-//Remove User
+// Remove User
 const removeUser = (socketId) => {
   onlineUsers = onlineUsers.filter((user) => user.socketId !== socketId);
 };
 
-//getUser
+// Get User
 const getUser = (userId) => {
   return onlineUsers.find((user) => user.userId === userId);
 };
 
-//Add user into Online
+// Add Online User
 const addOnlineUser = (userId, socketId) => {
   let userExists = onlineUsers.find((user) => user.userId === userId);
 
   if (userExists) {
-    userExists.socketId = socketId; //If the same user reconnects (refreshes page), they may get a new socketId. ,Incase of new or update socketId
+    userExists.socketId = socketId;
   } else {
     onlineUsers.push({ userId, socketId });
-    console.log("Users : ", onlineUsers);
+    console.log("Users:", onlineUsers);
   }
 };
 
 io.on("connection", (socket) => {
-  console.log("User connected :", socket.id);
+  console.log("User connected:", socket.id);
 
-  //Add User
   socket.on("newUser", (userId) => {
     addOnlineUser(userId, socket.id);
   });
 
-  //Send Messages
   socket.on("sendMessage", ({ recieverId, data }) => {
-    console.log("Send Message recieved");
-    console.log(" Recieved Id : ", recieverId);
-
     const receiver = getUser(recieverId);
-    console.log("Found reciever: ", receiver);
 
     if (receiver) {
-      console.log("Emitting to SocketId : ", receiver.socketId);
       io.to(receiver.socketId).emit("getMessage", data);
     }
   });
 
-  //Disconnect socket
   socket.on("disconnect", () => {
     removeUser(socket.id);
   });
 });
 
-app.get("/", (req, res) => {
-  res.send("Socket server running 🚀");
-});
+// Render requires dynamic port
+const PORT = process.env.PORT || 4000;
 
-// Handle favicon
-app.get("/favicon.ico", (req, res) => {
-  res.status(204).end();
+server.listen(PORT, () => {
+  console.log("Server running on port", PORT);
 });
-
-server.listen(4000, () => {
-  console.log("Server running on port 4000");
-});
-
-io.listen(4000);
