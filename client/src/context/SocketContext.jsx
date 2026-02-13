@@ -15,7 +15,7 @@ export const SocketcontextProvier = ({ children }) => {
   useEffect(() => {
     console.log("Socket Provider Mounted");
 
-    const newSocket = io("http://localhost:4000");
+    const newSocket = io("https://housify-socket.onrender.com");
 
     setSocket(newSocket);
 
