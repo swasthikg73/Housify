@@ -1,14 +1,14 @@
 import express from "express";
-import cores from "cors";
+import cors from "cors";
 import indexRouter from "./routes/index.route.js";
 import dotenv from "dotenv";
-import CookieParser from "cookie-parser";
+import cookieParser from "cookie-parser";
 dotenv.config();
 
 const app = express();
-app.use(CookieParser());
+app.use(cookieParser());
 app.use(
-  cores({
+  cors({
     origin: ["https://housify-theta.vercel.app"],
     credentials: true,
   })
