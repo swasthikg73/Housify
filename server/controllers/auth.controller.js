@@ -92,6 +92,7 @@ export const login = async (req, res) => {
     //Setting cookie with cookie-parser
     res.cookie("access-token", token, {
       httpOnly: true,
+      sameSite: "none",
       maxAge: 1000 * 60 * 60 * 24 * 7, //7 day
     });
 
