@@ -58,4 +58,17 @@ io.on("connection", (socket) => {
   });
 });
 
+app.get("/", (req, res) => {
+  res.send("Socket server running 🚀");
+});
+
+// Handle favicon
+app.get("/favicon.ico", (req, res) => {
+  res.status(204).end();
+});
+
+server.listen(4000, () => {
+  console.log("Server running on port 4000");
+});
+
 io.listen(4000);
