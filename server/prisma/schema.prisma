@@ -92,6 +92,7 @@ model Chat {
   seenBy      String[]   @db.ObjectId
   messages    Messages[]
   lastMessage String?
+  postId      String?    @db.ObjectId
 }
 
 model Messages {
