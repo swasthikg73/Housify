@@ -8,9 +8,11 @@ import {
   deleteUser,
   savePost,
   profilePageLists,
+  getNotifictionCount,
 } from "../controllers/user.controller.js";
 
 const userRouter = express.Router();
+userRouter.get("/getNotificationCount", verifyToken, getNotifictionCount);
 
 userRouter.get("/", verifyToken, getAllUsers);
 

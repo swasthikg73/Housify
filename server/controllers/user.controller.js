@@ -186,10 +186,6 @@ export const profilePageLists = async (req, res) => {
       },
     });
 
-    // console.log("Saved Posts, : ", savedPosts);
-
-    // console.log("My  Posts, : ", userPosts);
-
     return res.status(200).json({
       success: true,
       myPosts: userPosts,
@@ -199,6 +195,33 @@ export const profilePageLists = async (req, res) => {
     console.log(error);
     return res.status(500).json({
       success: false,
+      message: "Something went wrong",
+    });
+  }
+};
+
+export const getNotifictionCount = async (req, res) => {
+  try {
+    const tokenUserId = req.userId;
+
+    const number = await prisma.chat.count({
+      where: {
+        usersIds: {
+          hasSome: [tokenUserId],
+        },
+
+        NOT: {
+          seenBy: {
+            hasSome: [tokenUserId],
+          },
+        },
+      },
+    });
+
+    res.status(200).json({ number });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
       message: "Something went wrong",
     });
   }

@@ -9,6 +9,6 @@ const indexRouter = express.Router();
 indexRouter.use("/auth", authRouter);
 indexRouter.use("/post", postsRouter);
 indexRouter.use("/user", userRouter);
-indexRouter.use("/message", messageRouter);
+indexRouter.use("/chat", messageRouter);
 
 export default indexRouter;

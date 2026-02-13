@@ -1,3 +1,4 @@
+import { json } from "stream/consumers";
 import prisma from "../configs/prisma.config.js";
 
 export const getChats = async (req, res) => {
@@ -85,7 +86,7 @@ export const getChat = async (req, res) => {
         },
         data: {
           seenBy: {
-            push: [req.userId],
+            push: req.userId,
           },
         },
       });
@@ -110,6 +111,7 @@ export const createChat = async (req, res) => {
     const chat = await prisma.chat.create({
       data: {
         usersIds: [tokenUser, req.body.receiverId],
+        postId: req?.body?.postId,
       },
     });
 
@@ -151,18 +153,15 @@ export const readChat = async (req, res) => {
       });
     }
 
-    if (!chat.seenBy.includes(userId)) {
-      await prisma.chat.update({
-        where: {
-          id: chat.id,
-        },
-        data: {
-          seenBy: {
-            push: [userId],
-          },
-        },
-      });
-    }
+    await prisma.chat.update({
+      where: {
+        id: chat.id,
+      },
+      data: {
+        seenBy: [userId],
+      },
+    });
+
     return res.status(200).json({
       success: true,
       chat,
@@ -210,16 +209,15 @@ export const addMessage = async (req, res) => {
       },
     });
 
-    if (!chat.seenBy.includes(tokenUserId)) {
-      await prisma.chat.update({
-        where: {
-          id: chat.id,
-        },
-        data: {
-          seenBy: { push: [tokenUserId] },
-        },
-      });
-    }
+    await prisma.chat.update({
+      where: {
+        id: chat.id,
+      },
+      data: {
+        lastMessage: text,
+        seenBy: [tokenUserId],
+      },
+    });
 
     return res.status(201).json({
       success: true,
@@ -232,6 +230,55 @@ export const addMessage = async (req, res) => {
     );
     res.status(500).json({
       success: false,
+      message: "Something went wrong",
+    });
+  }
+};
+
+export const getChatbyPost = async (req, res) => {
+  try {
+    const postId = req?.params?.id;
+
+    const chat = await prisma.chat.findFirst({
+      where: {
+        postId: postId,
+        usersIds: {
+          hasSome: [req.userId],
+        },
+      },
+      include: {
+        messages: {
+          orderBy: {
+            createdAt: "asc",
+          },
+        },
+      },
+    });
+
+    if (!chat) {
+      return res.status(404).json({
+        message: "Chat not found",
+      });
+    }
+    if (!chat.seenBy.includes(req.userId)) {
+      await prisma.chat.update({
+        where: {
+          id: chat.id,
+        },
+        data: {
+          seenBy: [req.userId],
+        },
+      });
+    }
+
+    return res.status(200).json({
+      chat,
+    });
+
+    //find reciever
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
       message: "Something went wrong",
     });
   }
