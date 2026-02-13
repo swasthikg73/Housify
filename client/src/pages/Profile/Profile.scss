@@ -55,6 +55,10 @@
                     border-radius: 5px;
                     font-weight: 600;
                     cursor: pointer;
+
+                    &:hover {
+                        background-color: #bd9226;
+                    }
                 }
             }
 
@@ -75,6 +79,21 @@
                     width: 50px;
                     object-fit: cover;
                     border-radius: 50%;
+                }
+
+                .Logout {
+                    width: 100px;
+                    background-color: teal;
+                    padding: 10px 13px;
+                    border: none;
+                    border-radius: 5px;
+                    color: white;
+                    font-weight: 500;
+                    cursor: pointer;
+
+                    &:hover {
+                        background-color: rgb(4, 179, 179);
+                    }
                 }
             }
 
