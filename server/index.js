@@ -9,7 +9,7 @@ const app = express();
 app.use(CookieParser());
 app.use(
   cores({
-    origin: ["http://localhost:5173"],
+    origin: ["https://housify-theta.vercel.app"],
     credentials: true,
   })
 );

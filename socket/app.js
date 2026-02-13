@@ -9,7 +9,7 @@ const io = new Server(server, {
   cors: {
     origin: [
       "http://localhost:5173",
-      "https://your-frontend-domain.vercel.app", // replace later
+      "https://housify-theta.vercel.app", // replace later
     ],
     credentials: true,
   },
