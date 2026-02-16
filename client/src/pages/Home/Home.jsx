@@ -9,10 +9,9 @@ const Home = () => {
         <div className="wrapper">
           <h1 className="title">Find Real Estate & Get Your Dream Place</h1>
           <p className="description">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut
-            repudiandae, hic vitae quis provident molestiae esse. Laudantium et
-            quisquam perferendis sequi odit dolor ex id voluptates, quo nesciunt
-            repellat blanditiis?
+            Housify makes real estate simple — discover properties, list your
+            own, and communicate directly with property owners in one seamless
+            platform.
           </p>
           <Searchbar />
 
