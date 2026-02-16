@@ -89,8 +89,6 @@ const Details = () => {
     }));
   };
 
-  console.log("chats: ", chat);
-
   return (
     <div className="details-container">
       <div className="details">
