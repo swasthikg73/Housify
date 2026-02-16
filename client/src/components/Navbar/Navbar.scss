@@ -79,6 +79,8 @@ nav {
                 border: none;
                 position: relative;
 
+                @include md {}
+
                 .notification {
                     position: absolute;
                     top: -8px;
@@ -93,7 +95,7 @@ nav {
                 }
             }
 
-            span,
+
             Link {
                 @include md {
                     display: none;
