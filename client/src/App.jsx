@@ -15,12 +15,14 @@ import {
   listPageLoader,
   profilePageLoader,
 } from "./lib/Loader.js";
+import ErrorPage from "./pages/Error Handler/Error.jsx";
 
 function App() {
   const router = createBrowserRouter([
     {
       path: "/",
       element: <Layout />,
+      errorElement: <ErrorPage />,
       children: [
         {
           path: "",
@@ -49,6 +51,7 @@ function App() {
     {
       path: "/",
       element: <RequireAuth />,
+      errorElement: <ErrorPage />,
       children: [
         {
           path: "details/:id",
