@@ -21,6 +21,7 @@ import github from "./github.png";
 import gmail from "./gmail.png";
 import user from "./user.png";
 import back from "./back.png";
+import image from "./image.jpg";
 
 export const assets = {
   linkedin,
@@ -46,6 +47,7 @@ export const assets = {
   school,
   size,
   utility,
+  image,
 };
 
 export const ListData = [
